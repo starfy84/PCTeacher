@@ -12,9 +12,9 @@
 			    "title": "Adding two numbers",
 			    "generation": {
 				"variables": ["a", "b"],
-				"preExpression": "${m = __import__('random'); a = m.randint(1, 5); b = m.randint(1, 5)}"
-				"expression": "${a} + ${b} = ${a + b}"
-				"postExpression": "";
+				"preExpression": "${m = __import__('random'); a = m.randint(1, 5); b = m.randint(1, 5)}",
+				"expression": "${a} + ${b} = ${a + b}",
+				"postExpression": ""
 			    }
 			}
 		    ]
@@ -27,9 +27,9 @@
 			    "title": "Subtracting two numbers",
 			    "generation": {
 				"variables": ["a", "b"],
-				"preExpression": "${m = __import__('random'); a = m.randint(5, 10); b = m.randint(1, 5)}"
-				"expression": "${a} - ${b} = ${a - b}"
-				"postExpression": "";
+				"preExpression": "${m = __import__('random'); a = m.randint(5, 10); b = m.randint(1, 5)}",
+				"expression": "${a} - ${b} = ${a - b}",
+				"postExpression": ""
 			    }
 			}
 		    ]
@@ -47,9 +47,9 @@
 			    "title": "Multiplying two numbers",
 			    "generation": {
 				"variables": ["a", "b"],
-				"preExpression": "${m = __import__('random'); a = m.randint(1, 5); b = m.randint(1, 5)}"
-				"expression": "${a} * ${b} = ${a * b}"
-				"postExpression": "";
+				"preExpression": "${m = __import__('random'); a = m.randint(1, 5); b = m.randint(1, 5)}",
+				"expression": "${a} * ${b} = ${a * b}",
+				"postExpression": ""
 			    }
 			}
 		    ]
@@ -62,9 +62,9 @@
 			    "title": "Dividing two numbers",
 			    "generation": {
 				"variables": ["a", "b"],
-				"preExpression": "${m = __import__('random'); b = m.randint(2, 5); a = m.randint(1, 5) * b}"
-				"expression": "${a} / ${b} = ${a / b}"
-				"postExpression": "";
+				"preExpression": "${m = __import__('random'); b = m.randint(2, 5); a = m.randint(1, 5) * b}",
+				"expression": "${a} / ${b} = ${a / b}",
+				"postExpression": ""
 			    }
 			}
 		    ]
