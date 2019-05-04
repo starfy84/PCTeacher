@@ -1,0 +1,75 @@
+{
+    "title": "Introduction to BEDMAS",
+    "content": [
+	{
+	    "title": "Addition",
+	    "content": [
+		{
+		    "title": "Combining Groups",
+		    "content": "Addition is the incrementation of a number by another.",
+		    "examples": [
+			{
+			    "title": "Adding two numbers",
+			    "generation": {
+				"variables": ["a", "b"],
+				"preExpression": "${m = __import__('random'); a = m.randint(1, 5); b = m.randint(1, 5)}",
+				"expression": "${a} + ${b} = ${a + b}",
+				"postExpression": ""
+			    }
+			}
+		    ]
+		},
+		{
+		    "title": "Subtraction",
+		    "content": "Subtraction is the decrementation of a number by another. It is also the addition of a negative number.",
+		    "examples": [
+			{
+			    "title": "Subtracting two numbers",
+			    "generation": {
+				"variables": ["a", "b"],
+				"preExpression": "${m = __import__('random'); a = m.randint(5, 10); b = m.randint(1, 5)}",
+				"expression": "${a} - ${b} = ${a - b}",
+				"postExpression": ""
+			    }
+			}
+		    ]
+		}
+	    ]
+	},
+	{
+	    "title": "Multiplication",
+	    "content": [
+		{
+		    "title": "Multiplying Groups",
+		    "content": "Multiplication is repeated addition.",
+		    "examples": [
+			{
+			    "title": "Multiplying two numbers",
+			    "generation": {
+				"variables": ["a", "b"],
+				"preExpression": "${m = __import__('random'); a = m.randint(1, 5); b = m.randint(1, 5)}",
+				"expression": "${a} * ${b} = ${a * b}",
+				"postExpression": ""
+			    }
+			}
+		    ]
+		},
+		{
+		    "title": "Division",
+		    "content": "Division is a count of repeated subtraction.",
+		    "examples": [
+			{
+			    "title": "Dividing two numbers",
+			    "generation": {
+				"variables": ["a", "b"],
+				"preExpression": "${m = __import__('random'); b = m.randint(2, 5); a = m.randint(1, 5) * b}",
+				"expression": "${a} / ${b} = ${a / b}",
+				"postExpression": ""
+			    }
+			}
+		    ]
+		}
+	    ]
+	}
+    ]
+}
