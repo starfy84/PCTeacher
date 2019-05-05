@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
+{% block media_end_js %}
+    {% if user.is_authenticated %}
+    <script type="text/javascript">
+        data = {{ chart_data|safe }};
+        $(function () {
+            var ctx = $('#graph').find('canvas').get(0).getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    maintainAspectRatio: false,
+                }
+            });
+        });
+    </script>
+    {% endif %}
+{% endblock%}
+
 {% block content %}
     {% if user.is_authenticated %}
         {% if user.first_name %}
@@ -28,5 +46,8 @@
         </div>
 
         {% endfor %}
+    </div>
+    <div id="graph">
+        <canvas width="300" height="300"></canvas>
     </div>
 {% endblock %}

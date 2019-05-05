@@ -1,23 +1,60 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.db.models import Sum
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-from .forms import UserRegisterForm
+from django.utils.safestring import mark_safe
 
 import re
+import json
+from operator import itemgetter
+
 from num2words import num2words
+
+
 # Create your views here.
 
+from .forms import UserRegisterForm
 from website.models import Lesson, SubLesson, SubLessonUserData, LEARNING_TYPES
+
+
+chart_colors = [0x3366CC, 0xDC3912, 0xFF9900, 0x109618, 0x990099, 0x3B3EAC, 0x0099C6, 0xDD4477, 0x66AA00, 0xB82E2E,
+                0x316395, 0x994499, 0x22AA99, 0xAAAA11, 0x6633CC, 0xE67300, 0x8B0707, 0x329262, 0x5574A6, 0x3B3EAC]
+highlight_colors = []
+
+
+def _highlight_colors():
+    for color in chart_colors:
+        r, g, b = color >> 16, (color >> 8) & 0xFF, color & 0xFF
+        highlight_colors.append('#%02X%02X%02X' % (min(int(r * 1.2), 255),
+                                                   min(int(g * 1.2), 255),
+                                                   min(int(b * 1.2), 255)))
+
+
+_highlight_colors()
+del _highlight_colors
+
+chart_colors = list(map('#%06X'.__mod__, chart_colors))
 
 
 def home(request):
     context = {
         'lessons': Lesson.objects.order_by('id'),
     }
+    if request.user.is_authenticated:
+        objs = sorted(SubLessonUserData.objects.filter(user=request.user).values('learn_type') \
+                                               .annotate(sum=Sum('tries')).values_list('learn_type', 'sum'))
+        total = sum(map(itemgetter(1), objs))
+        context['chart_data'] = mark_safe(json.dumps({
+            'labels': [x[1].title() for x in LEARNING_TYPES],
+            'datasets': [{
+                'backgroundColor': chart_colors,
+                'highlightBackgroundColor': highlight_colors,
+                'data': [round(x[1] / total * 100, 2) for x in objs]
+            }]
+        }))
     return render(request, 'home.html', context)
 
 
