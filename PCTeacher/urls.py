@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from website.views import home, lesson, sublesson, register
 
+admin.site.site_header = 'PCTeacher Administration'
+admin.site.site_title = 'PCTeacher Admin'
+admin.site.index_title = 'PCTeacher Administration'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
