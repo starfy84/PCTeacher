@@ -6,3 +6,8 @@
 .apple {
     width: 20px;
 }
+
+.green {
+    background-color: #4ae05b !important;
+    border-color: #33b742 !important;
+}

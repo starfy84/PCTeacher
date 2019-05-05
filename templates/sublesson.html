@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="progress">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ sublessons.done }}" aria-valuemin="0" aria-valuemax="{{ sublessons.total }}" style="width: {{ sublessons.percentage }}%"></div>
+    <div class="green progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ sublessons.done }}" aria-valuemin="0" aria-valuemax="{{ sublessons.total }}" style="width: {{ sublessons.percentage }}%"></div>
 </div>
 <br>
 <div class="text">
@@ -33,7 +33,7 @@
 
 	<p>Click the button to show the practise question and answer.</p>
 
-	<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bb">Open Practise Questions</button>
+	<button type="button" class="btn btn-success green" data-toggle="collapse" data-target="#bb">Open Practise Questions</button>
 	<div id="bb" class="collapse">
 	<br>
 		<form action="" method="post">
@@ -42,7 +42,7 @@
                 <label for="answerInput">{{ question }}</label> =
     			<input type="text" id="answerInput" required name="answer" value={{ user_answer }}>
             </div>
-			<input type="submit" class="btn btn-info" value="Submit">
+			<input type="submit" class="btn btn-success green" value="Submit">
 		</form>
 	</div>
 </div>
