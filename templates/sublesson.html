@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block header_extra %}
-    {{ lesson.topic.title }}
+{{ lesson.topic.title }}
 {% endblock %}
 
 {% block content %}
@@ -11,63 +11,64 @@
 </div>
 
 {% if not correct %}
-    <br><br>
+<br><br>
 
-    <!-- Button -->
-    <div class="container">
-        {% if attempted %}
-            <div class="alert alert-danger" role="alert">
-                Your answer was wrong! Try again!
-            </div>
-            <br>
-        {% endif %}
+<br>
+<h3>Example: {{ sublesson.example_title }}</h3>
+<p>{{ example }}</p>
 
-        <p>Click the button to show the example question and answers.</p>
+<!-- Button -->
+<div class="container">
+	{% if attempted %}
+	<div class="alert alert-danger" role="alert">
+		Your answer was wrong! Try again!
+	</div>
+	<br>
+	{% endif %}
 
-        <!-- Input Button -->
-        <script>
-            running = false;
-            start = 0;
-            end = 0;
-            startTimer = ()=>{
-                if(!running){
-                    running = true;
-                    start = performance.now();
-                }
-            }
+	<p>Click the button to show the example question and answers.</p>
 
-            endTimer = ()=>{
-                if(running) {
-                    running = false;
-                    end = performance.now();
-                }
-            }
-        </script>
+	<!-- Input Button -->
+	<script>
+		running = false;
+		start = 0;
+		end = 0;
+		startTimer = ()=>{
+			if(!running){
+				running = true;
+				start = performance.now();
+			}
+		}
 
-        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bb" onclick="startTimer()">Open Example Questions</button>
-        <div id="bb" class="collapse">
-            <br>
-            <h3>Example: {{ sublesson.example_title }}</h3>
-            <p>{{ example }}</p>
+		endTimer = ()=>{
+			if(running) {
+				running = false;
+				end = performance.now();
+			}
+		}
+	</script>
 
-            <p>{{ question }}</p>
+	<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bb" onclick="startTimer()">Open Practise Questions</button>
+	<div id="bb" class="collapse">
 
-            <form action="" method="post">
-                {% csrf_token %}
-                <input type="text" required name="answer" value={{ user_answer }}>
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-    </div>
+		<p>{{ question }}</p>
+
+		<form action="" method="post">
+			{% csrf_token %}
+			<input type="text" required name="answer" value={{ user_answer }}>
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+</div>
 {% else %}
-    <div class="alert alert-success" role="alert">
-        Correct answer!
-        {% if next_sublesson %}
-        <a href="{% url 'sublesson' lesson.id next_sublesson.id %}">Proceed to the next sublesson.</a>
-        {% else %}
-            Congrulations! You finished this lesson. <a href="/">Go home.</a>
-        {% endif %}
-    </div>
+<div class="alert alert-success" role="alert">
+	Correct answer!
+	{% if next_sublesson %}
+	<a href="{% url 'sublesson' lesson.id next_sublesson.id %}">Proceed to the next sublesson.</a>
+	{% else %}
+	Congrulations! You finished this lesson. <a href="/">Go home.</a>
+	{% endif %}
+</div>
 {% endif %}
 
 {% endblock %}
