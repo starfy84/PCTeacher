@@ -110,7 +110,7 @@ def sublesson(request, id, sub_id):
             '*': '{} objects repeated {} times results in {} objects.',
             '/': '{} split into groups of {} creates {} groups.'
         }
-        example = operator_format[re.match('[+*/-]', example_question).group(0)].format(*re.findall('\d+', example_question), str(eval(example_answer)))
+        example = operator_format[re.search('[+*/-]', example_question).group(0)].format(*re.findall('\d+', example_question), str(eval(example_answer)))
         match = re.search('\d+', example)
         while match is not None:
             l, r = match.span()
