@@ -45,11 +45,26 @@
                 {% block header_extra %}
                 {% endblock %}
             </ul>
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-item nav-link" href="{% url 'register'%}">Register</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
 
     <div class="container">
         <div class="page-header" style="padding-top:2em; margin:auto;">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
             {% block content %}
             {% endblock %}
         </div>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 	<div class="content-section">
 		<form method="POST">
@@ -7,7 +7,7 @@
 
 			<fieldset class="form-group">
 				<legend class="border-bottom mb-4">Register</legend>
-				{{ form.as_p }}
+				{{ form|crispy }}
 			</fieldset>
 			<div class = "form-group">
 				<button class = "btn btn-outline-info" type = "submit">Sign Up </button>
@@ -15,7 +15,7 @@
 		</form>
 		<div class="border-top pt-3">
 			<small class="text-muted">
-				Have An Account? <a class="ml-2" href="#">Sign In</a>
+				Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
 			</small>
 		</div>
 	</div>
