@@ -111,14 +111,11 @@ def sublesson(request, id, sub_id):
             '/': '{} split into groups of {} creates {} groups.'
         }
         example = operator_format[re.match('[+*/-]', example_question).group(0)].format(*re.findall('\d+', example_question), str(eval(example_answer)))
-        match = re.search('\d+', question)
+        match = re.search('\d+', example)
         while match is not None:
             l, r = match.span()
-            example_question = example_question[:l] + num2words(int(example_question[l:r])) + example_question[r:]
-            match = re.search('\d+', example_question)
-        example_answer = num2words(eval(example_answer))
-    # example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
-    example = '{} = {}'.format(example_question, example_answer)
+            example = example[:l] + num2words(int(example[l:r])) + example[r:]
+            match = re.search('\d+', example)
 
     num_lessons = lesson.sublesson_set.count()
     done_lessons = lesson.sublesson_set.filter(id__in=done_sublessons(request.user)).count()
