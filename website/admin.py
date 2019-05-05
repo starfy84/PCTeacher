@@ -15,7 +15,7 @@ class VariableInline(admin.TabularInline):
 
 
 class SubLessonAdmin(admin.ModelAdmin):
-    fields = ('lesson', 'title', 'content', 'example_title', 'expression')
+    fields = ('lesson', 'title', 'content', 'example_title', 'expression', 'markdown_expression')
     inlines = [VariableInline]
     list_display = ('lesson', 'title')
 

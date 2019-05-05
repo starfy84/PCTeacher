@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load markdown %}
+
 {% block header_extra %}
 	{{ lesson.topic.title }}
 {% endblock %}
@@ -11,7 +13,7 @@
 <br>
 <div class="text">
 	<h3>{{ lesson.title }}</h3>
-	<p>{{ sublesson.content|linebreaks }}</p>
+	<p>{{ sublesson.content|markdown:'problem'|safe|linebreaks }}</p>
 </div>
 
 {% if not correct %}
@@ -39,7 +41,7 @@
 		<form action="" method="post">
 			{% csrf_token %}
             <div class="form-group">
-                <label for="answerInput">{{ question }}</label> =
+                <label for="answerInput">{{ question|markdown:'problem'|safe }}</label> =
     			<input type="text" id="answerInput" required name="answer" value={{ user_answer }}>
             </div>
 			<input type="submit" class="btn btn-success green" value="Submit">

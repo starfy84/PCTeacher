@@ -28,6 +28,7 @@ class SubLesson(models.Model):
 
     example_title = models.CharField(max_length=128)
     expression = models.TextField(null=True, blank=True)
+    markdown_expression = models.TextField(null=True, blank=True)
 
     def parse(self, expression, variables={}):
         from random import randint, uniform
@@ -43,10 +44,16 @@ class SubLesson(models.Model):
     def gen_answer(self, variables):
         return self.parse(self.expression, variables=variables)
 
-    def gen_question(self, variables):
-        ret = self.expression
+    def gen_question(self, variables, markdown=False):
+        if markdown:
+            padding = ' {} '
+            ret = self.markdown_expression
+        else:
+            padding = '{}'
+            ret = self.expression
+        ret = padding.format(ret)
         for var, value in variables.items():
-            ret = ret.replace(str(var), str(value))
+            ret = ret.replace(padding.format(var), padding.format(value))
         return ret
 
     def __str__(self):

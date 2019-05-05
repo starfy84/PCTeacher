@@ -70,8 +70,6 @@ def sublesson(request, id, sub_id):
 
         if data.current_problem is None or data.current_answer is None:
             variables = sublesson.gen_variables()
-            data.current_problem = sublesson.gen_question(variables)
-            data.current_answer = sublesson.gen_answer(variables)
 
             objs = SubLessonUserData.objects.filter(user=request.user).values('learn_type').annotate(sum=Sum('tries')).values_list('learn_type', 'sum')
             learn_type_cnt = sorted(objs, key=lambda x: x[1])
@@ -83,6 +81,10 @@ def sublesson(request, id, sub_id):
                 typ = learn_type_cnt[0][0]
 
             data.learn_type = typ
+
+            data.current_problem = sublesson.gen_question(variables, markdown=sublesson.markdown_expression)
+            data.current_answer = sublesson.gen_answer(variables)
+
             data.save()
 
     context['correct'] = data.solved
@@ -99,15 +101,16 @@ def sublesson(request, id, sub_id):
             l, r = match.span()
             example_question = example_question[:l] + image*int(example_question[l:r]) + example_question[r:]
             match = re.search('\d+', example_question)
-        example = '{} = {}'.format(example_question, str(eval(example_answer)))
+        example = '{} = {}'.format(example_question, image*(eval(example_answer)))
     elif data.learn_type == 1: #VERBAL / text
         operator_format = {
             '+': '{} objects added to {} objects results in {} objects.',
             '-': '{} objects with {} objects taken away results in {} objects.',
             '*': '{} objects repeated {} times results in {} objects.',
-            '/': '{} split into groups of {} creates {} groups.'
+            '//': '{} split into groups of {} creates {} groups.',
+            '**': '{} multipled {} times is {}.',
         }
-        example = operator_format[re.search('[+*/-]', example_question).group(0)].format(*re.findall('\d+', example_question), str(eval(example_answer)))
+        example = operator_format[re.search('(\\+)|(-)|(\\/\\/)|(\\*\\*)|(\\*)', example_question).group(0)].format(*re.findall('\d+', example_question), str(eval(example_answer)))
         match = re.search('\d+', example)
         while match is not None:
             l, r = match.span()
