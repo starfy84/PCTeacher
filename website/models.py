@@ -1,5 +1,8 @@
+import parser
+
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 class Topic(models.Model):
@@ -24,6 +27,24 @@ class SubLesson(models.Model):
 
     example_title = models.CharField(max_length=128)
     expression = models.TextField(null=True, blank=True)
+
+    def parse(self, expression, variables={}):
+        locals().update(variables)
+        return eval(parser.expr(expression).compile())
+
+    def gen_variables(self):
+        ret = {}
+        for var in self.variable_set.all():
+            ret[var.name] = self.parse(var.value)
+
+    def gen_answer(self, variables):
+        return self.parse(expression, variables=variables)
+
+    def gen_question(self, variables):
+        ret = expression
+        for var, value in variables.items():
+            ret = ret.replace(var, value)
+        return ret
 
     def __str__(self):
         return 'Sublesson "{}"'.format(self.title)

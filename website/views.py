@@ -20,8 +20,19 @@ def lesson(request, id):
     return render(request, 'lesson.html', context)
 
 def sublesson(request, id, sub_id):
+    lesson = get_object_or_404(Lesson, pk=id)
+    sublesson = get_object_or_404(SubLesson, pk=sub_id)
+    example_vars = sublesson.gen_variables()
+    example = sublesson.gen_question(example_vars) + ' = ' + sublesson.gen_answer(example_vars)
+
+    variables = sublesson.gen_variables()
+    question = sublesson.gen_question(variables)
+    answer = sublesson.gen_answer(variables)
     context = {
-        'lesson': get_object_or_404(Lesson, pk=id),
-        'sublesson': get_object_or_404(SubLesson, pk=sub_id),
+        'lesson': lesson,
+        'sublesson': sublesson,
+        'example': example,
+        'question': question,
+        'answer': answer,
     }
     return render(request, 'sublesson.html', context)
