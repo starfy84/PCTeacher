@@ -91,7 +91,7 @@ def sublesson(request, id, sub_id):
     example_answer = sublesson.gen_question(example_vars)
     learning_type_to_use = 0
     if learning_type_to_use == 0:   #VISUAL
-        image = '<img src="/static/apple.png"></img>'
+        image = '<img src="/static/apple.png" style="width:20px;"></img>'
         match = re.search('\d+', example_question)
         while match is not None:
             l, r = match.span()
