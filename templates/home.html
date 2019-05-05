@@ -4,8 +4,9 @@
     {% if user.is_authenticated %}
         {% if user.first_name %}
             <h3>Welcome, {{ user.first_name }}!</h3>
-        {% endif %}
+        {% else %}
             <h3>Welcome, {{ user.username }}!</h3>
+        {% endif %}
     {% else %}
         <h3>Welcome!</h3>
     {% endif %}
