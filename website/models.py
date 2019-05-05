@@ -29,6 +29,7 @@ class SubLesson(models.Model):
     expression = models.TextField(null=True, blank=True)
 
     def parse(self, expression, variables={}):
+        from random import randint, uniform
         locals().update(variables)
         return eval(parser.expr(expression).compile())
 
@@ -36,14 +37,15 @@ class SubLesson(models.Model):
         ret = {}
         for var in self.variable_set.all():
             ret[var.name] = self.parse(var.value)
+        return ret
 
     def gen_answer(self, variables):
-        return self.parse(expression, variables=variables)
+        return self.parse(self.expression, variables=variables)
 
     def gen_question(self, variables):
-        ret = expression
+        ret = self.expression
         for var, value in variables.items():
-            ret = ret.replace(var, value)
+            ret = ret.replace(str(var), str(value))
         return ret
 
     def __str__(self):

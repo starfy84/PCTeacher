@@ -23,7 +23,7 @@ def sublesson(request, id, sub_id):
     lesson = get_object_or_404(Lesson, pk=id)
     sublesson = get_object_or_404(SubLesson, pk=sub_id)
     example_vars = sublesson.gen_variables()
-    example = sublesson.gen_question(example_vars) + ' = ' + sublesson.gen_answer(example_vars)
+    example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
 
     variables = sublesson.gen_variables()
     question = sublesson.gen_question(variables)
