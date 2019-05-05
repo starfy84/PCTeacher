@@ -24,7 +24,7 @@ class SubLesson(models.Model):
 
     example_title = models.CharField(max_length=128)
     expression = models.TextField(null=True, blank=True)
-    
+
     def __str__(self):
         return 'Sublesson "{}"'.format(self.title)
 
