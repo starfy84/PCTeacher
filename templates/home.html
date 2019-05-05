@@ -6,10 +6,10 @@
     <div class="jumbotron">
 
         {% for lesson in lessons %}
-        
+
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-            <label class="custom-control-label" for="defaultUnchecked">
+            <input type="checkbox" class="custom-control-input" id="id_{{lesson.title}}">
+            <label class="custom-control-label" for="id_{{lesson.title}}">
                 <section style="font-size: 20px">
                 <a href="{% url 'lesson' lesson.id %}">
                     {{ lesson.title }}
