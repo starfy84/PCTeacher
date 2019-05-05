@@ -67,4 +67,5 @@ class SubLessonUserData(models.Model):
     current_answer = models.CharField(max_length=128, null=True, blank=True, default=None)
     time = models.DurationField(default=datetime.timedelta(seconds=0))
     tries = models.IntegerField(default=1)
+    solved = models.BooleanField(default=False)
     learn_type = models.CharField(max_length=128, default='Logical')
