@@ -89,6 +89,7 @@ def sublesson(request, id, sub_id):
     example_vars = sublesson.gen_variables()
     example_question = sublesson.gen_question(example_vars)
     example_answer = sublesson.gen_question(example_vars)
+    example = None
     if data.learn_type == 0:   #VISUAL
         image = '<img src="/static/apple.png" class="apple"></img>'
         match = re.search('\d+', example_question)
@@ -97,16 +98,22 @@ def sublesson(request, id, sub_id):
             example_question = example_question[:l] + image*int(example_question[l:r]) + example_question[r:]
             match = re.search('\d+', example_question)
         example_answer = image*eval(example_answer)
+        l,r = re.match('[+*/-]', example_question)
+        example_question = example_question[:l] + '<span font-size="3em">' + example_question[l:r] + '</span>' + example_question[r:]
+        example = '{} <span font-size="3em">=</span> {}'.format(example_question, example_answer)
     elif data.learn_type == 1: #VERBAL / text
-        match = re.search('\d+', example_question)
+        operator_format = {
+            '+': '{} objects added to {} objects results in {} objects.',
+            '-': '{} objects with {} objects taken away results in {} objects.',
+            '*': '{} objects repeated {} times results in {} objects.',
+            '/': '{} split into groups of {} creates {} groups.'
+        }
+        example = operator_format[re.match('[+*/-]', example_question).group(0)].format(*re.findall('\d+', example_question), str(eval(example_answer)))
+        match = re.search('\d+', question)
         while match is not None:
             l, r = match.span()
-            example_question = example_question[:l] + num2words(int(example_question[l:r])) + example_question[r:]
-            match = re.search('\d+', example_question)
-        example_answer = num2words(eval(example_answer))
-    # example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
-    example = '{} = {}'.format(example_question, example_answer)
-
+            question = question[:l] + num2words(int(question[l:r])) + question[r:]
+            match = re.search('\d+', question)
     context.update({
         'example': example,
         'question': data.current_problem,
