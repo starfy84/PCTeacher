@@ -67,7 +67,7 @@
 <div class="alert alert-success" role="alert">
 	Correct answer!
 	{% if next_sublesson %}
-	<a href="{% url 'sublesson' lesson.id next_sublesson.id %}">Proceed to the next sublesson.</a>
+	<a href="{% url 'sublesson' lesson.id next_sublesson.id %}">Proceed to the next lesson.</a>
 	{% else %}
 	Congrulations! You finished this lesson. <a href="/">Go home.</a>
 	{% endif %}
