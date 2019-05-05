@@ -10,11 +10,43 @@
 	<p>{{ sublesson.content|linebreaks }}</p>
 </div>
 
+<!-- Button -->
 <div class="container">
-	<p>Click the button to show the example question and answer locations.</p>
-	<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bb">Open Example Questions</button>
+	<p>Click the button to show the example question and answers.</p>
+
+
+
+
+	<!-- Input Button -->
+	<script>
+		running = false
+		start = 0
+		end = 0
+		startTimer = ()=>{
+			if(!running){
+				running = true
+				start = performance.now()
+			}
+		}
+
+		endTimer = ()=>{
+			if(running) {
+				running = false
+				end = performance.now()
+			}
+		}
+	</script>
+
+	<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bb" onclick="startTimer()">Open Example Questions</button>
 	<div id="bb" class="collapse">
-		<h3>Adding Two Numbers</h3>
+		<h3>Example: </h3>
+		<!-- Example Question -->
+		<h3>{{ example.title }}</h3>
+
+		<form action="">
+			<input type="text" name="answer">
+			<input type="submit" value="Submit">
+		</form>
 	</div>
 </div>
 
