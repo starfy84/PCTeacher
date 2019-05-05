@@ -102,7 +102,7 @@ def sublesson(request, id, sub_id):
         match = re.search('\d+', example_question)
         while match is not None:
             l, r = match.span()
-            example_question = question[:l] + num2words(int(question[l:r])) + question[:r]
+            example_question = example_question[:l] + num2words(int(example_question[l:r])) + example_question[:r]
             match = re.search('\d+', example_question)
         example_answer = num2words(int(example_answer))
     else:                           #LOGICAL
