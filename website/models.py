@@ -37,7 +37,7 @@ class SubLesson(models.Model):
     def gen_variables(self):
         ret = {}
         for var in self.variable_set.all():
-            ret[var.name] = self.parse(var.value)
+            ret[var.name] = self.parse(var.value, variables=ret)
         return ret
 
     def gen_answer(self, variables):

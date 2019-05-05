@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -6,7 +7,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm
 # Create your views here.
 
-from website.models import Lesson, SubLesson, SubLessonUserData
+from website.models import Lesson, SubLesson, SubLessonUserData, LEARNING_TYPES
 
 
 def home(request):
@@ -65,6 +66,17 @@ def sublesson(request, id, sub_id):
             variables = sublesson.gen_variables()
             data.current_problem = '{} = ?'.format(sublesson.gen_question(variables))
             data.current_answer = sublesson.gen_answer(variables)
+
+            objs = SubLessonUserData.objects.filter(user=request.user).values('learn_type').annotate(sum=Sum('tries')).values_list('learn_type', 'sum')
+            learn_type_cnt = sorted(objs, key=lambda x: x[1])
+            for i in LEARNING_TYPES:
+                if i[0] not in list(map(lambda x: x[0], learn_type_cnt)):
+                    typ = i[0]
+                    break
+            else:
+                typ = learn_type_cnt[0][0]
+
+            data.learn_type = typ
             data.save()
 
     context['correct'] = data.solved
@@ -76,6 +88,7 @@ def sublesson(request, id, sub_id):
     context.update({
         'example': example,
         'question': data.current_problem,
+        'learn_type': data.learn_type,
     })
     return render(request, 'sublesson.html', context)
 
