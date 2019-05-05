@@ -61,7 +61,12 @@
     </div>
 {% else %}
     <div class="alert alert-success" role="alert">
-        Correct answer! Proceed to the next sublesson.
+        Correct answer!
+        {% if next_sublesson %}
+        <a href="{% url 'sublesson' lesson.id next_sublesson.id %}">Proceed to the next sublesson.</a>
+        {% else %}
+            Congrulations! You finished this lesson. <a href="/">Go home.</a>
+        {% endif %}
     </div>
 {% endif %}
 

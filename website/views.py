@@ -14,12 +14,20 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+def done_sublessons(user):
+    return SubLessonUserData.objects.filter(user=user, solved=True).values_list('sublesson_id', flat=True)
+
+
 def lesson(request, id):
     lesson = get_object_or_404(Lesson, pk=id)
 
+    first_sublesson = lesson.sublesson_set.order_by('id').first()
+    current_sublesson = lesson.sublesson_set.exclude(id__in=done_sublessons(request.user)).order_by('id').first()
+
     context = {
         'lesson': lesson,
-        'sublesson_begin': lesson.sublesson_set.order_by('id').first()
+        'sublesson_begin': current_sublesson,
+        'start': first_sublesson == current_sublesson,
     }
     return render(request, 'lesson.html', context)
 
@@ -47,6 +55,7 @@ def sublesson(request, id, sub_id):
         if not correct:
             data.tries += 1
         data.save()
+        context['next_sublesson'] = lesson.sublesson_set.exclude(id__in=done_sublessons(request.user)).order_by('id').first()
     else:
         data, created = SubLessonUserData.objects.get_or_create(sublesson=sublesson, user=request.user)
 

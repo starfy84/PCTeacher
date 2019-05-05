@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <a href="{% url 'sublesson' lesson.id sublesson_begin.id %}">
-        Begin lesson
-    </a>
+    {% if sublesson_begin is none %}
+        <div class="alert alert-success" role="alert">
+            Congratulations! You have completed this lesson. Please procede to the next lesson. 
+        </div>
+    {% else %}
+        <a href="{% url 'sublesson' lesson.id sublesson_begin.id %}">
+            {% if start %} Begin lesson {% else %} Continue lesson {% endif %}
+        </a>
+    {% endif %}
 {% endblock %}

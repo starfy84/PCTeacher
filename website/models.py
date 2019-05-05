@@ -60,6 +60,12 @@ class Variable(models.Model):
     sublesson = models.ForeignKey('SubLesson', on_delete=models.CASCADE) 
 
 
+LEARNING_TYPES = (
+    (0, 'VISUAL'),
+    (1, 'VERBAL'), # speech OR writing
+    (2, 'LOGICAL'),
+)
+
 class SubLessonUserData(models.Model):
     sublesson = models.ForeignKey('SubLesson', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -68,4 +74,4 @@ class SubLessonUserData(models.Model):
     time = models.DurationField(default=datetime.timedelta(seconds=0))
     tries = models.IntegerField(default=1)
     solved = models.BooleanField(default=False)
-    learn_type = models.CharField(max_length=128, default='Logical')
+    learn_type = models.IntegerField(default=0, choices=LEARNING_TYPES)
