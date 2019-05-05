@@ -99,13 +99,7 @@ def sublesson(request, id, sub_id):
             l, r = match.span()
             example_question = example_question[:l] + image*int(example_question[l:r]) + example_question[r:]
             match = re.search('\d+', example_question)
-        example_answer = image*eval(example_answer)
-        l,r = re.match('[+*/-]', example_question)
-        example_question = example_question[:l] + '<span font-size="3em">' + example_question[l:r] + '</span>' + example_question[r:]
-        example = '{} <span font-size="3em">=</span> {}'.format(example_question, example_answer)
-        print(example)
-        print(example_question)
-        print(example_answer)
+        example = '{} = {}'.format(example_question, str(eval(example_answer)))
     elif data.learn_type == 1: #VERBAL / text
         operator_format = {
             '+': '{} objects added to {} objects results in {} objects.',
