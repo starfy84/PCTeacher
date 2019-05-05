@@ -10,6 +10,7 @@
             Congratulations! You have completed this lesson. Please proceed to the next lesson. 
         </div>
     {% else %}
+        <h3>Welcome Back! Click the button to continue to your lesson!</h3>
         <a class ="btn btn-primary btn-lg btn-block" href="{% url 'sublesson' lesson.id sublesson_begin.id %}" role="button">
             {% if start %} Begin lesson {% else %} Continue lesson {% endif %}
         </a>
