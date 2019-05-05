@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Topic(models.Model):
@@ -34,3 +34,11 @@ class Variable(models.Model):
     order = models.IntegerField()
     value = models.TextField()
     sublesson = models.ForeignKey('SubLesson', on_delete=models.CASCADE) 
+
+
+class SubLessonUserData(models.Model):
+    sublesson = models.ForeignKey('SubLesson', on_delete=models.CASCADE)
+    user = ForeignKey(User, on_delete=models.CASCADE)
+    problem = models.IntegerField()
+    time = models.DurationField()
+    learn_type = models.CharField(max_length=128)
