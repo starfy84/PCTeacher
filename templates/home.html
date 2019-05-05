@@ -6,9 +6,10 @@
     <div class="jumbotron">
         <!-- unchecked button -->
         {% for lesson in lessons %}
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+        <!-- <div class="custom-control custom-checkbox"> -->
             <label class="custom-control-label" for="defaultUnchecked">
+            <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+            
                 <!-- text inside button -->
                 <section style="font-size: 20px">
                     <a href="{% url 'lesson' lesson.id %}">
@@ -16,7 +17,7 @@
                     </a>
                 </section>
             </label>
-        </div>
+        <!-- </div> -->
         {% endfor %}
     </div>
 {% endblock %}
