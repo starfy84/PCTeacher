@@ -35,6 +35,7 @@ def lesson(request, id):
         'lesson': lesson,
         'sublesson_begin': current_sublesson,
         'start': first_sublesson == current_sublesson,
+        'title': lesson.title,
     }
     return render(request, 'lesson.html', context)
 
@@ -47,6 +48,7 @@ def sublesson(request, id, sub_id):
     context = {
         'lesson': lesson,
         'sublesson': sublesson,
+        'title': sublesson.title,
         'user_answer': '',
     }
 
