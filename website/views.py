@@ -113,6 +113,8 @@ def sublesson(request, id, sub_id):
         'example': example,
         'question': data.current_problem,
         'learn_type': data.learn_type,
+        'num_lessons': lesson.sublesson_set.count(),
+        'done_lessons': lesson.sublesson_set.filter(ids__in=done_sublessons(request.user)),
     })
     return render(request, 'sublesson.html', context)
 
