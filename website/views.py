@@ -65,7 +65,7 @@ def sublesson(request, id, sub_id):
 
         if data.current_problem is None or data.current_answer is None:
             variables = sublesson.gen_variables()
-            data.current_problem = '{} = ?'.format(sublesson.gen_question(variables))
+            data.current_problem = sublesson.gen_question(variables)
             data.current_answer = sublesson.gen_answer(variables)
 
             objs = SubLessonUserData.objects.filter(user=request.user).values('learn_type').annotate(sum=Sum('tries')).values_list('learn_type', 'sum')

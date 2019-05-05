@@ -49,14 +49,15 @@
 
 	<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bb" onclick="startTimer()">Open Practise Questions</button>
 	<div id="bb" class="collapse">
-
         <br>
-		<p>{{ question }}</p>
 
 		<form action="" method="post">
 			{% csrf_token %}
-			<input type="text" required name="answer" value={{ user_answer }}>
-			<input type="submit" value="Submit">
+            <div class="form-group">
+                <label for="answerInput">{{ question }}</label> =
+    			<input type="text" id="answerInput" required name="answer" value={{ user_answer }}>
+            </div>
+			<input type="submit" class="btn btn-primary" value="Submit">
 		</form>
 	</div>
 </div>
