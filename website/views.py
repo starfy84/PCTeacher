@@ -95,7 +95,7 @@ def sublesson(request, id, sub_id):
         match = re.search('\d+', example_question)
         while match is not None:
             l, r = match.span()
-            example_question = question[:l] + image*int(question[l:r]) + question[:r]
+            example_question = example_question[:l] + image*int(example_question[l:r]) + example_question[:r]
             match = re.search('\d+', example_question)
         example_answer = image*int(example_answer)
     elif learning_type_to_use == 1: #VERBAL / text
