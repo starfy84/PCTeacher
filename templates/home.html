@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3>Welcome!</h3>
+    {% if user.is_authenticated %}
+        <h3>Welcome, {{ user.first_name }}!</h3>
+    {% else %}
+        <h3>Welcome!</h3>
+    {% endif %}
     <p>The PCTeacher's School is a learning platform specially designed to adapt to your learning style. Click below to select the lesson which you would like to start with, and PCTeacher will automatically adjust to your learning style as you go along.</p>
 
 
