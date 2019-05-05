@@ -7,7 +7,7 @@
 {% block content %}
     {% if sublesson_begin is none %}
         <div class="alert alert-success" role="alert">
-            Congratulations! You have completed this lesson. Please procede to the next lesson. 
+            Congratulations! You have completed this lesson. Please proceed to the next lesson. 
         </div>
     {% else %}
         <a href="{% url 'sublesson' lesson.id sublesson_begin.id %}">
