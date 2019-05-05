@@ -38,7 +38,7 @@ class Variable(models.Model):
 
 class SubLessonUserData(models.Model):
     sublesson = models.ForeignKey('SubLesson', on_delete=models.CASCADE)
-    user = ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     problem = models.IntegerField()
     time = models.DurationField()
     learn_type = models.CharField(max_length=128)
