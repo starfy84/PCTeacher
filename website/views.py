@@ -35,6 +35,7 @@ def lesson(request, id):
         'lesson': lesson,
         'sublesson_begin': current_sublesson,
         'start': first_sublesson == current_sublesson,
+        'title': lesson.title,
     }
     return render(request, 'lesson.html', context)
 
@@ -47,6 +48,7 @@ def sublesson(request, id, sub_id):
     context = {
         'lesson': lesson,
         'sublesson': sublesson,
+        'title': sublesson.title,
         'user_answer': '',
     }
 
@@ -112,12 +114,24 @@ def sublesson(request, id, sub_id):
         match = re.search('\d+', question)
         while match is not None:
             l, r = match.span()
-            question = question[:l] + num2words(int(question[l:r])) + question[r:]
-            match = re.search('\d+', question)
+            example_question = example_question[:l] + num2words(int(example_question[l:r])) + example_question[r:]
+            match = re.search('\d+', example_question)
+        example_answer = num2words(eval(example_answer))
+    # example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
+    example = '{} = {}'.format(example_question, example_answer)
+
+    num_lessons = lesson.sublesson_set.count()
+    done_lessons = lesson.sublesson_set.filter(id__in=done_sublessons(request.user)).count()
+
     context.update({
         'example': example,
         'question': data.current_problem,
         'learn_type': data.learn_type,
+        'sublessons': {
+            'done': done_lessons,
+            'total': num_lessons,
+            'percentage': done_lessons / num_lessons * 100,
+        }
     })
     return render(request, 'sublesson.html', context)
 
