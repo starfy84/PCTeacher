@@ -21,7 +21,7 @@ class SubLessonAdmin(admin.ModelAdmin):
 
 
 class SubLessonUserDataAdmin(admin.ModelAdmin):
-    fields = ('sublesson', 'user', 'current_problem', 'current_answer', 'time', 'tries', 'solved', 'learn_type')
+    fields = ('sublesson', 'user', 'current_problem', 'current_answer', 'tries', 'solved', 'learn_type')
     list_display = ('sublesson', 'user', 'current_problem')
 
 
