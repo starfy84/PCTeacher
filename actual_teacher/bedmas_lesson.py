@@ -1,4 +1,5 @@
 import json, re, sys
+from num2words import num2words
 
 def show_lesson(lesson):
     print(lesson['title'])
@@ -7,7 +8,7 @@ def show_lesson(lesson):
         examples = lesson['examples']
         for example in examples:
             print(example['title'])
-            print(example_generation(example['generation']))
+            print(text_transform(example_generation(example['generation'])))
             question_generation(example['generation'])
     else:
         for content in lesson['content']:
@@ -49,6 +50,25 @@ def var_replace(s, vardict):
         else:
             out.append(i)
     return ' '.join(out)
+
+def numerical_transform(s):
+    return s
+
+def text_transform(s):
+    out = s
+    match = re.search('\d+', out)
+    while match is not None:
+        l, r = match.span()
+        out = out[:l] + 'O'*int(out[l:r]) + out[r:]
+        match = re.search('\d+', out)
+
+def picture_transform(s):
+    match = re.search('\d+', s)
+    out = s
+    while match is not None:
+        l, r = match.span()
+        out = out[:l] + 'O'*int(out[l:r]) + out[r:]
+    return out
 
 with open('bedmas_lesson.json') as f:
     lesson = json.loads(f.read())

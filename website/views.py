@@ -5,6 +5,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm
+
+import re
+from num2words import num2words
 # Create your views here.
 
 from website.models import Lesson, SubLesson, SubLessonUserData, LEARNING_TYPES
@@ -84,7 +87,28 @@ def sublesson(request, id, sub_id):
     context['attempted'] = (data.tries > 1)
 
     example_vars = sublesson.gen_variables()
-    example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
+    example_question = sublesson.gen_question(example_vars)
+    example_answer = sublesson.gen_question(example_vars)
+    learning_type_to_use = 0
+    if learning_type_to_use == 0:   #VISUAL
+        image = '<img src="apple.png"></img>'
+        match = re.search('\d+', example_question)
+        while match is not None:
+            l, r = match.span()
+            example_question = question[:l] + image*int(question[l:r]) + question[:r]
+            match = re.search('\d+', example_question)
+        example_answer = image*int(example_answer)
+    elif learning_type_to_use == 1: #VERBAL / text
+        match = re.search('\d+', example_question)
+        while match is not None:
+            l, r = match.span()
+            example_question = question[:l] + num2words(int(question[l:r])) + question[:r]
+            match = re.search('\d+', example_question)
+        example_answer = num2words(int(example_answer))
+    else:                           #LOGICAL
+        None
+    # example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
+    example = '{} = {}'.format(example_question, example_answer)
 
     context.update({
         'example': example,
