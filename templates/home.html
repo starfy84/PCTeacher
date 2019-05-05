@@ -4,20 +4,21 @@
     <h3>Welcome!<h3>
     
     <div class="jumbotron">
-        <!-- unchecked button -->
+
         {% for lesson in lessons %}
+        
         <div class="custom-control custom-checkbox">
-            <label class="custom-control-label" for="defaultUnchecked">
             <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-            
-                <!-- text inside button -->
+            <label class="custom-control-label" for="defaultUnchecked">
                 <section style="font-size: 20px">
-                    <a href="{% url 'lesson' lesson.id %}">
-                        {{ lesson.title }}
-                    </a>
-                </section>
+                <a href="{% url 'lesson' lesson.id %}">
+                    {{ lesson.title }}
+                </a>
+                <br>
+            </section>
             </label>
         </div>
+
         {% endfor %}
     </div>
 {% endblock %}

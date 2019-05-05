@@ -95,14 +95,14 @@ def sublesson(request, id, sub_id):
         match = re.search('\d+', example_question)
         while match is not None:
             l, r = match.span()
-            example_question = example_question[:l] + image*int(example_question[l:r]) + example_question[:r]
+            example_question = example_question[:l] + image*int(example_question[l:r]) + example_question[r:]
             match = re.search('\d+', example_question)
         example_answer = image*eval(example_answer)
     elif learning_type_to_use == 1: #VERBAL / text
         match = re.search('\d+', example_question)
         while match is not None:
             l, r = match.span()
-            example_question = example_question[:l] + num2words(int(example_question[l:r])) + example_question[:r]
+            example_question = example_question[:l] + num2words(int(example_question[l:r])) + example_question[r:]
             match = re.search('\d+', example_question)
         example_answer = num2words(eval(example_answer))
     else:                           #LOGICAL
