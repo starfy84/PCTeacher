@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block content %}
-<div>
+<div class="text">
 	<h3>{{ lesson.title }}</h3>
-	<h1>{{ sublesson.content }}</h1>
+	<p>{{ sublesson.content }}</p>
 </div>
+
+<div class="container">
+	<p>Click the button to show the example question and answer locations.</p>
+	<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bb">Open Example Questions</button>
+	<div id="bb" class="collapse">
+		<h3>Adding Two Numbers</h3>
+	</div>
+</div>
+
 
 
 
