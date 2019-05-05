@@ -91,7 +91,7 @@ def sublesson(request, id, sub_id):
     example_answer = sublesson.gen_question(example_vars)
     learning_type_to_use = 0
     if learning_type_to_use == 0:   #VISUAL
-        image = '<img src="apple.png"></img>'
+        image = '<img src="/static/apple.png"></img>'
         match = re.search('\d+', example_question)
         while match is not None:
             l, r = match.span()
@@ -105,8 +105,6 @@ def sublesson(request, id, sub_id):
             example_question = example_question[:l] + num2words(int(example_question[l:r])) + example_question[r:]
             match = re.search('\d+', example_question)
         example_answer = num2words(eval(example_answer))
-    else:                           #LOGICAL
-        None
     # example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
     example = '{} = {}'.format(example_question, example_answer)
 
