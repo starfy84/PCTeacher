@@ -91,7 +91,7 @@ def sublesson(request, id, sub_id):
     example_vars = sublesson.gen_variables()
     example_question = sublesson.gen_question(example_vars)
     example_answer = sublesson.gen_question(example_vars)
-    example = None
+    example = '{} = {}'.format(example_question, str(eval(example_answer)))
     if data.learn_type == 0:   #VISUAL
         image = '<img src="/static/apple.png" class="apple"></img>'
         match = re.search('\d+', example_question)
