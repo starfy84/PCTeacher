@@ -116,6 +116,7 @@ def sublesson(request, id, sub_id):
             l, r = match.span()
             example = example[:l] + num2words(int(example[l:r])) + example[r:]
             match = re.search('\d+', example)
+        example = example.capitalize()
 
     num_lessons = lesson.sublesson_set.count()
     done_lessons = lesson.sublesson_set.filter(id__in=done_sublessons(request.user)).count()
