@@ -21,6 +21,7 @@ def done_sublessons(user):
     return SubLessonUserData.objects.filter(user=user, solved=True).values_list('sublesson_id', flat=True)
 
 
+@login_required
 def lesson(request, id):
     lesson = get_object_or_404(Lesson, pk=id)
 
