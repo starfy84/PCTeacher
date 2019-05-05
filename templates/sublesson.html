@@ -46,8 +46,10 @@
 		<h3>{{ sublesson.example_title }}</h3>
 		<p>{{ example }}</p>
 
-		<form action="">
-			<p>{{ question }}</p>
+		<p>{{ question }}</p>
+
+        <form action="" method="post">
+            {% csrf_token %}
 			<input type="text" name="answer">
 			<input type="submit" value="Submit">
 		</form>

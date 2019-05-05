@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-from website.models import Lesson, SubLesson
+from website.models import Lesson, SubLesson, SubLessonUserData
 
 def home(request):
     context = {
@@ -19,20 +20,27 @@ def lesson(request, id):
     }
     return render(request, 'lesson.html', context)
 
+@login_required
 def sublesson(request, id, sub_id):
     lesson = get_object_or_404(Lesson, pk=id)
     sublesson = get_object_or_404(SubLesson, pk=sub_id)
+
+    data, created = SubLessonUserData.objects.get_or_create(sublesson=sublesson, user=request.user)
+    
+    if data.current_problem is None or data.current_answer is None:
+        variables = sublesson.gen_variables()
+        data.current_problem = '{} = ?'.format(sublesson.gen_question(variables))
+        data.current_answer = sublesson.gen_answer(variables)
+        data.save()
+
     example_vars = sublesson.gen_variables()
     example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
 
-    variables = sublesson.gen_variables()
-    question = sublesson.gen_question(variables)
-    answer = sublesson.gen_answer(variables)
     context = {
         'lesson': lesson,
         'sublesson': sublesson,
         'example': example,
-        'question': question,
-        'answer': answer,
+        'question': data.current_problem,
+        'answer': data.current_answer,
     }
     return render(request, 'sublesson.html', context)
