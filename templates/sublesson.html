@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
+<div class="progress">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ done_lessons }}" aria-valuemin="0" aria-valuemax="{{ num_lessons }}" style="width: 75%"></div>
+</div>
 <div class="text">
 	<h3>{{ lesson.title }}</h3>
 	<p>{{ sublesson.content|linebreaks }}</p>
