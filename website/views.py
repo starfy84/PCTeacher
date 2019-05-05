@@ -109,12 +109,18 @@ def sublesson(request, id, sub_id):
     # example = '{} = {}'.format(sublesson.gen_question(example_vars), sublesson.gen_answer(example_vars))
     example = '{} = {}'.format(example_question, example_answer)
 
+    num_lessons = lesson.sublesson_set.count()
+    done_lessons = lesson.sublesson_set.filter(id__in=done_sublessons(request.user)).count()
+
     context.update({
         'example': example,
         'question': data.current_problem,
         'learn_type': data.learn_type,
-        'num_lessons': lesson.sublesson_set.count(),
-        'done_lessons': lesson.sublesson_set.filter(ids__in=done_sublessons(request.user)),
+        'sublessons': {
+            'done': done_lessons,
+            'total': num_lessons,
+            'percentage': done_lessons / num_lessons * 100,
+        }
     })
     return render(request, 'sublesson.html', context)
 
