@@ -23,4 +23,14 @@ class SubLesson(models.Model):
     lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE)
 
     example_title = models.CharField(max_length=128)
+    expression = models.TextField(null=True, blank=True)
+    
+    def __str__(self):
+        return 'Sublesson "{}"'.format(self.title)
 
+
+class Variable(models.Model):
+    name = models.CharField(max_length=128)
+    order = models.IntegerField()
+    value = models.TextField()
+    sublesson = models.ForeignKey('SubLesson', on_delete=models.CASCADE) 

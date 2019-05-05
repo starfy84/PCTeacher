@@ -30,16 +30,17 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-expand-xl navbar-expand-md navbar-light bg-light shadow-sm sticky-top">
+    <nav class="navbar navbar-default navbar-expand-lg navbar-expand-xl navbar-expand-md shadow-sm sticky-top" id="mainbar">
         <div class="navbar-header">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
 
-        <div class="collapse navbar-collapse" id="mainbar">
-            <a class="navbar-brand" href="/">PCTeacher</a>
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand text-black" style="color:black;" href="/">PCTeacher</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            </ul>
             <ul class="navbar-nav navbar-right">
                 {% block header_extra %}
                 {% endblock %}
@@ -53,12 +54,6 @@
             {% endblock %}
         </div>
     </div>
-
-    <h1>
-        Lesson Plan:
-    </h1>
-   
-    <h2
 
     <footer class="page-footer footer py-4">
         <div class="container text-center" style="font-size: 1.2rem;">

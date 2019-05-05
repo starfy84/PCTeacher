@@ -5,3 +5,8 @@
 *.py[co]
 *.mo
 *~
+static
+siteenv
+restart
+uwsgi.ini
+uwsgi_params

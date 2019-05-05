@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block header_extra %}
+    {{ lesson.topic.title }}
+{% endblock %}
+
+{% block content %}
+    <a href="{% url 'sublesson' lesson.id sublesson_begin.id %}">
+        Begin lesson
+    </a>
+{% endblock %}
