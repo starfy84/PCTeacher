@@ -89,8 +89,7 @@ def sublesson(request, id, sub_id):
     example_vars = sublesson.gen_variables()
     example_question = sublesson.gen_question(example_vars)
     example_answer = sublesson.gen_question(example_vars)
-    learning_type_to_use = 0
-    if learning_type_to_use == 0:   #VISUAL
+    if data.learn_type == 0:   #VISUAL
         image = '<img src="/static/apple.png" class="apple"></img>'
         match = re.search('\d+', example_question)
         while match is not None:
@@ -98,7 +97,7 @@ def sublesson(request, id, sub_id):
             example_question = example_question[:l] + image*int(example_question[l:r]) + example_question[r:]
             match = re.search('\d+', example_question)
         example_answer = image*eval(example_answer)
-    elif learning_type_to_use == 1: #VERBAL / text
+    elif data.learn_type == 1: #VERBAL / text
         match = re.search('\d+', example_question)
         while match is not None:
             l, r = match.span()
