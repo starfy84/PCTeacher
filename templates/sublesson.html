@@ -16,7 +16,7 @@
 	<p>{{ sublesson.content|markdown:'problem'|safe|linebreaks }}</p>
 </div>
 
-{% if not correct %}
+{% if problems.correct < problems.total %}
 <br><br>
 
 <h3>Example: {{ sublesson.example_title }}</h3>
@@ -24,9 +24,8 @@
 
 <hr>
 
-<!-- Button -->
 <div class="container">
-	{% if attempted %}
+	{% if problems.attempted %}
 	<div class="alert alert-danger" role="alert">
 		Your answer was wrong! Try again!
 	</div>
@@ -35,16 +34,19 @@
 
 	<p>Click the button to show the practise question and answer.</p>
 
-	<button type="button" class="btn btn-success green" data-toggle="collapse" data-target="#bb">Open Practise Questions</button>
-	<div id="bb" class="collapse">
+    <b>Solved {{ problems.correct }} / {{ problems.total }} problems.</b>
+    <br>
+    <button type="button" class="btn btn-success green" data-toggle="collapse" data-target="#bb">Open Practise Questions</button>
+    <div id="bb" class="collapse {% if problems.attempted %} in show {% endif %}">
 	<br>
 		<form action="" method="post">
 			{% csrf_token %}
             <div class="form-group">
                 <label for="answerInput">{{ question|markdown:'problem'|safe }}</label> =
     			<input type="text" id="answerInput" required name="answer" value={{ user_answer }}>
+                <br>
+                <input type="submit" class="btn btn-success green" value="Submit">
             </div>
-			<input type="submit" class="btn btn-success green" value="Submit">
 		</form>
 	</div>
 </div>

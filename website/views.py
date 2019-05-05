@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.http import Http404
@@ -21,7 +22,7 @@ def home(request):
 
 
 def done_sublessons(user):
-    return SubLessonUserData.objects.filter(user=user, solved=True).values_list('sublesson_id', flat=True)
+    return SubLessonUserData.objects.filter(user=user, solved=settings.PROBLEM_SOLVE_COUNT).values_list('sublesson_id', flat=True)
 
 
 @login_required
@@ -59,36 +60,44 @@ def sublesson(request, id, sub_id):
         except Exception:
             raise Http404()
         context['user_answer'] = user_answer
-        correct = (user_answer == int(data.current_answer))
-        data.solved = correct
-        if not correct:
-            data.tries += 1
-        data.save()
-        context['next_sublesson'] = lesson.sublesson_set.exclude(id__in=done_sublessons(request.user)).order_by('id').first()
-    else:
-        data, created = SubLessonUserData.objects.get_or_create(sublesson=sublesson, user=request.user)
-
-        if data.current_problem is None or data.current_answer is None:
-            variables = sublesson.gen_variables()
-
-            objs = SubLessonUserData.objects.filter(user=request.user).values('learn_type').annotate(sum=Sum('tries')).values_list('learn_type', 'sum')
-            learn_type_cnt = sorted(objs, key=lambda x: x[1])
-            for i in LEARNING_TYPES:
-                if i[0] not in list(map(lambda x: x[0], learn_type_cnt)):
-                    typ = i[0]
-                    break
+        try:
+            correct = (user_answer == int(data.current_answer))
+        except Exception:
+            pass
+        else:
+            data.solved += correct
+            if not correct:
+                data.current_tries += 1
+                data.tries += 1
             else:
-                typ = learn_type_cnt[0][0]
-
-            data.learn_type = typ
-
-            data.current_problem = sublesson.gen_question(variables, markdown=sublesson.markdown_expression)
-            data.current_answer = sublesson.gen_answer(variables)
+                context['user_answer'] = ''
+                data.current_problem = None
+                data.current_answer = None
+                data.current_tries = 1
 
             data.save()
+        context['next_sublesson'] = lesson.sublesson_set.exclude(id__in=done_sublessons(request.user)).order_by('id').first()
+    else:
+        data = SubLessonUserData.objects.get_or_create(sublesson=sublesson, user=request.user)[0]
 
-    context['correct'] = data.solved
-    context['attempted'] = (data.tries > 1)
+    if (data.current_problem is None or data.current_answer is None) and data.solved < settings.PROBLEM_SOLVE_COUNT:
+        variables = sublesson.gen_variables()
+
+        objs = SubLessonUserData.objects.filter(user=request.user).values('learn_type').annotate(sum=Sum('tries')).values_list('learn_type', 'sum')
+        learn_type_cnt = sorted(objs, key=lambda x: x[1])
+        for i in LEARNING_TYPES:
+            if i[0] not in list(map(lambda x: x[0], learn_type_cnt)):
+                typ = i[0]
+                break
+        else:
+            typ = learn_type_cnt[0][0]
+
+        data.learn_type = typ
+
+        data.current_problem = sublesson.gen_question(variables, markdown=sublesson.markdown_expression)
+        data.current_answer = sublesson.gen_answer(variables)
+
+        data.save()
 
     example_vars = sublesson.gen_variables()
     example_question = sublesson.gen_question(example_vars)
@@ -125,6 +134,11 @@ def sublesson(request, id, sub_id):
         'example': example,
         'question': data.current_problem,
         'learn_type': data.learn_type,
+        'problems': {
+            'correct': data.solved,
+            'total': settings.PROBLEM_SOLVE_COUNT,
+            'attempted': data.current_tries > 1,
+        },
         'sublessons': {
             'done': done_lessons,
             'total': num_lessons,
