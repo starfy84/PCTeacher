@@ -87,7 +87,6 @@
 		    "examples": [
 			{
 			    "title": "Dividing two numbers",
-			    "title": "Multiplying two numbers",
 			    "generation": {
 				"variables": [
 				    {
@@ -101,7 +100,7 @@
 					"value": "__import__('random').randint(2, 5) * $b"
 				    }
 				],
-				"expression": "$a / $b = ${ $a / $b }"
+				"expression": "$a / $b = ${ $a // $b }"
 			    }
 			}
 		    ]
