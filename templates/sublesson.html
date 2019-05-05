@@ -7,7 +7,7 @@
 {% block content %}
 <div class="text">
 	<h3>{{ lesson.title }}</h3>
-	<p>{{ sublesson.content }}</p>
+	<p>{{ sublesson.content|str|linebreaks }}</p>
 </div>
 
 <div class="container">
