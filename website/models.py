@@ -41,4 +41,5 @@ class SubLessonUserData(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     problem = models.IntegerField()
     time = models.DurationField()
+    tries = models.IntegerField()
     learn_type = models.CharField(max_length=128)
