@@ -1,7 +1,8 @@
+import datetime
 import parser
 
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 # Create your models here.
 
@@ -62,7 +63,8 @@ class Variable(models.Model):
 class SubLessonUserData(models.Model):
     sublesson = models.ForeignKey('SubLesson', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    problem = models.IntegerField()
-    time = models.DurationField()
-    tries = models.IntegerField()
-    learn_type = models.CharField(max_length=128)
+    current_problem = models.CharField(max_length=128, null=True, blank=True, default=None)
+    current_answer = models.CharField(max_length=128, null=True, blank=True, default=None)
+    time = models.DurationField(default=datetime.timedelta(seconds=0))
+    tries = models.IntegerField(default=1)
+    learn_type = models.CharField(max_length=128, default='Logical')
