@@ -54,6 +54,8 @@ class SubLesson(models.Model):
         ret = padding.format(ret)
         for var, value in variables.items():
             ret = ret.replace(padding.format(var), padding.format(value))
+        if markdown:
+            ret = '~' + ret + '~'
         return ret
 
     def __str__(self):
