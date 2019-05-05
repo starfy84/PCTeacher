@@ -136,3 +136,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = '/'
+
+MARKDOWN_ADMIN_EDITABLE_STYLE = {
+    'safe_mode': False,
+    'use_camo': True,
+    'texoid': True,
+    'math': True,
+}
+
+MARKDOWN_DEFAULT_STYLE = {
+    'safe_mode': True,
+    'nofollow': True,
+    'math': True,
+}
+
+MARKDOWN_STYLES = {
+    'problem': MARKDOWN_ADMIN_EDITABLE_STYLE,
+}
