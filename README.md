@@ -44,6 +44,3 @@
 - Python
 - Html
 - Css
-
-## Try it out
-[pcteacher.tk](http://pcteacher.tk/)
