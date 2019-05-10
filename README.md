@@ -9,7 +9,7 @@
 
 ## How we built it
 - Our website was made using a Python web-framework called Django and stylized with Bootstrap
-- It is hosted on DigitaOcean
+- It is hosted on DigitalOcean
 - MathML is used for LaTex Parsing (to display in-line math such as fractions and exponents).
 
 ## Challenges we ran into
@@ -43,4 +43,4 @@
 - Jinja
 - Python
 - Html
-- Css
+- CSS
